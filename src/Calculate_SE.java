@@ -3,7 +3,10 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Scanner;
 public class Calculate_SE {
-	 ArrayList<String> Arithmetic=new ArrayList<String>(); //所有运算式集合
+	 ArrayList<String> Arithmetic11=new ArrayList<String>(); //所有运算式集合
+	 ArrayList<String> Arithmetic12=new ArrayList<String>(); 
+	final static ArrayList<String> fraction = new ArrayList<String>();
+	final static ArrayList<String> FraAnswer = new ArrayList<String>();
     private static LinkedList<String> operators=new LinkedList<>();	//用于记录操作符
     private static LinkedList<String> output=new LinkedList<>();    //用于记录输出
     private static StringBuilder sb=new StringBuilder();    //用于展示后缀表达式
@@ -19,12 +22,14 @@ public class Calculate_SE {
 		int Right=0;
 		float R = 0;
 		int F=0;
-		while(F==0)
-		{
+		
+		//while(F==0)
+		//{
+		//outer:
 		for(int i=0;i<number;i++)
 		{
-			CN[i]=(int)(Math.random()*2+4);
-			int Bracket=(int)(Math.random()*CN[i]-2);
+			//CN[i]=(int)(Math.random()*2+4);
+			CN[i]=5;
 			for(int j=0;j<CN[i];j++)
 			{
 				N[i][j]=(int) (Math.random()*100+1);
@@ -58,6 +63,81 @@ public class Calculate_SE {
 						}
 					}
 				}
+				/*while(C[i][1]==C[i][2])
+					C[i][2]=Str[(int)(Math.random()*3)];
+				
+				while(N[i][3]==N[i][4])
+					N[i][4]=(int) (Math.random()*100+1);
+				if(CN[i]==5)
+				{
+					int a=0,b=0,sum1,sum2;
+					if(C[i][0]=='+')
+						a=N[i][0]+N[i][1];
+					if(C[i][0]=='-')
+						a=N[i][0]-N[i][1];
+					if(C[i][0]=='*')
+						a=N[i][0]*N[i][1];
+					if(C[i][0]=='/')
+						a=N[i][0]/N[i][1];
+					
+					if(C[i][3]=='+')
+						a=N[i][3]+N[i][4];
+					if(C[i][3]=='-')
+						a=N[i][3]-N[i][4];
+					if(C[i][3]=='*')
+						a=N[i][3]*N[i][4];
+					if(C[i][3]=='/')
+						a=N[i][3]/N[i][4];
+					if(C[i][1]=='-')
+					{
+						while(a-N[i][2]<=0)
+						{
+							N[i][2]=(int) (Math.random()*100+1);
+						}
+					}
+					if(C[i][1]=='/')
+					{
+						while(a%N[i][2]!=0)
+						{
+								int temp=a;
+								a = a <N[i][2]? a: N[i][2];
+								N[i][2] = temp > N[i][2]? temp: N[i][2];
+								for(int num = a; num >= 1; num--)
+								{
+									if(a % num == 0 && N[i][2] % num == 0)
+									{
+										N[i][2]=num;
+										break;
+									}
+								}
+							}
+					}
+					
+					if(C[i][3]=='-')
+					{
+						while(N[i][2]-b<=0)
+						{
+							N[i][3]=(int) (Math.random()*100+1);
+						}
+					}
+					if(C[i][3]=='/')
+					{
+						while(N[i][2]%b!=0)
+						{
+								int temp=b;
+								b = b <N[i][2]? b: N[i][2];
+								N[i][2] = temp > N[i][2]? temp: N[i][2];
+								for(int num = b; num >= 1; num--)
+								{
+									if(b % num == 0 && N[i][2] % num == 0)
+									{
+										N[i][2]=num;
+										break;
+									}
+								}
+							}
+					}
+				}*/
 			}
 			String AE=new String();
 			LinkedList<String> list=new LinkedList<>();
@@ -82,11 +162,13 @@ public class Calculate_SE {
 				AE+='('+String.valueOf(N[i][CN[i]-2])+String.valueOf(C[i][CN[i]-2])+String.valueOf(N[i][CN[i]-1])+')'+'=';
 				String sum=transferToPostfix(list);
 				char fir =sum.charAt(0);
-				if(fir=='-')
-					F=0;
-				else
-					F=1;
-				System.out.print(AE);
+				Arithmetic12.add(sum);
+				/*if(fir=='-'){
+					Arithmetic11.clear();
+					Arithmetic12.clear();
+					continue outer;
+				}
+				/*System.out.print(AE);
 				String SUM=scanner.nextLine();
 				if(SUM.equals(sum))
 				{
@@ -98,13 +180,67 @@ public class Calculate_SE {
 				float R1 = (float)Right;
 				float R2 = (float)number;
 				R=(float) (R1/R2*100.00);
-				AE+=sum;
-				Arithmetic.add(AE);
+				AE+=sum;*/
+				Arithmetic11.add(AE);
 		}
-		System.out.print("本次答题共计"+number+"道，回答正确"+Right+"道，正确率为"+R+"%.\n");
+		 Iterator it1 = Arithmetic11.iterator();  
+         while (it1.hasNext()) {  
+             System.out.println(it1.next());  
+         } 
+         Iterator it11 = Arithmetic12.iterator();  
+         while (it11.hasNext()) {  
+             System.out.println(it11.next());  
+         } 
+		//System.out.print("本次答题共计"+number+"道，回答正确"+Right+"道，正确率为"+R+"%.\n");
 	}
+	//}
+//--------------------------------------------------------------------------
+	public void fenshu()
+	{
+		 int num1,num2,num3;
+         for(int i=0;i<21;i++){
+         num1=1+(int)(Math.random()*10);//随机生成一个0-100的整数
+         num2=1+(int)(Math.random()*10);//随机生成一个0-100的整数
+         num3=1+(int)(Math.random()*10);//随机生成一个0-100的整数
+ 	   int M,Z;
+        int x1,x2,x3;
+            x1=1+(int)(Math.random()*num1);//生成一个比分母num1小的分子，实现真分数
+            x2=1+(int)(Math.random()*num2);//生成一个比分母num2小的分子，实现真分数
+            x3=1+(int)(Math.random()*num3);//生成一个比分母num3小的分子，实现真分数
+                Z=x1*num2*num3+x2*num1*num3+x3*num1*num2;
+                M=num1*num2*num3;
+                String d=simplification(Z,M);
+                String s=x1+"/"+num1+"+"+x2+"/"+num2+"+"+x3+"/"+num3+"=";
+                fraction.add(s);
+                FraAnswer.add(d);
+         }
+         Iterator it1 = fraction.iterator();  
+         while (it1.hasNext()) {  
+             System.out.println(it1.next());  
+         } 
+         Iterator it11 = FraAnswer.iterator();  
+         while (it11.hasNext()) {  
+             System.out.println(it11.next());  
+         } 
 	}
-
+	
+    public static String simplification(int a,int b){
+        int y = 1;
+        for(int i=a;i>=1;i--){
+            if(a%i==0&&b%i==0){
+                y = i;
+                break;
+            }
+        }
+        int z = a/y;
+        int m = b/y;
+        if(z==0) {
+            return "0";
+        }
+        if(m==1)
+        	return ""+z;
+        return z+"/"+m;
+    }   
 	//------------------------中缀表达式转为后缀表达式---------------------------------------------------
     private static String transferToPostfix(LinkedList<String> list){
         Iterator<String> it=list.iterator();
