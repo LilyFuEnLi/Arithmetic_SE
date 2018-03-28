@@ -1,3 +1,4 @@
+import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Label;
@@ -32,6 +33,8 @@ public class Start extends JFrame{
     private JPanel panel1=new JPanel();
     private JLabel label=new JLabel();
     private JLabel label1=new JLabel();
+    private JLabel Timelabel = new JLabel();
+    private JLabel Time = new JLabel();
     //private JLabel panel4=new JPanel();
     JTextField text=new JTextField(10);
    // ArrayList<String> list=new ArrayList<String>();
@@ -80,9 +83,20 @@ public class Start extends JFrame{
 		        label1.setText(shizi);
 			}
 		});
-       //=========================================================
+        //=========================================================
         JButton buttonFenXi = new JButton("答题分析");
         buttonFenXi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+          Chart_H frame = new Chart_H();
+          frame.setTitle("成绩柱形图");
+          frame.setBounds(100, 100, 400, 420);
+          frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+          frame.setVisible(true);   
+			}
+		});
+        
+        JButton buttonAgain = new JButton("进行下一轮");
+        buttonAgain.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Start frame = new Start();
 			    frame.setTitle("小学四则运算训练小程序");
@@ -93,11 +107,22 @@ public class Start extends JFrame{
 			    frame.setVisible(true);        // 打开新界面
 			    number+=20;
 			    dispose(); 	
+				
 			}
 		});
+ //-------------------------对两个按钮的添加------------------------------     
         
-        JButton buttonAgain = new JButton("进行下一轮");
+       /* JPanel panel3=new JPanel();
+        //button.setSize(10,10);
        
+        panel3.add(buttonFenshu);
+        panel3.add(buttonInteger);
+        add(panel3);
+        
+        JPanel panel4 = new JPanel();
+        panel4.add(buttonNext);
+        panel4.add(buttonSubmit);
+        add(panel4);*/
  //----------------------------------------提交答案按钮的设定--------------------------
         JButton buttonSubmit=new JButton("提交答案");
         buttonSubmit.addActionListener(new ActionListener() {
@@ -107,6 +132,7 @@ public class Start extends JFrame{
           		   String question=label1.getText();
           		   String result=text.getText();
           		   String ifRight="";
+          		   String time;
           		   if((CA.Arithmetic12.get(number-1)).equals(result)){
           			   ifRight="正确";
           			   rightSum++;
@@ -153,7 +179,27 @@ public class Start extends JFrame{
                           e1.printStackTrace();   
                       }   
                   }   
-            
+                 File file1 = new File("result1.txt");
+                 FileReader fr1 = null;
+                 BufferedReader br1 = null;
+                 String time="dfgd";
+				try {
+                     fr1 = new FileReader(file1);
+                     br1 = new BufferedReader(fr1);
+                     String line = "";
+                     while((line = br1.readLine()) != null) {
+                    	 time=br1.readLine();
+                     }
+                 } catch (Exception e1) {
+                     e1.printStackTrace();
+                 } finally {
+                     try {
+                         br1.close();
+                         fr1.close();
+                     } catch (Exception e1) {
+                         e1.printStackTrace();
+                     }
+                 }
                 int size=list.size();
                 int errorSum=size-rightSum;
                 JFrame resultFrame=new JFrame();
@@ -162,17 +208,31 @@ public class Start extends JFrame{
                 resultFrame.setLocationRelativeTo(null);
                 resultFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 resultFrame.setVisible(true);
+                JPanel panel7 = new JPanel();
+                Timelabel.setText("您本轮答题用时为：");
+                Time.setText(time);
+                panel7.add(Timelabel);
+                panel7.add(Time);
+                
+                resultFrame.add(panel7,BorderLayout.NORTH);
+                
+                
+                setLayout(new GridLayout(10,2,5,5));
                 JPanel panel=new JPanel();
                 Font font = new Font(Font.DIALOG, Font.PLAIN, 20);
                 panel.add(new JLabel("做题总数： "+size+" "+"正确数："+rightSum+" "+" 最终得分："+rightSum*5));
-                setLayout(new GridLayout(100,1,5,5));
+                setLayout(new GridLayout(100,2,5,5));
                 for(int i=0;i<size;i++){
                     panel.add(new JLabel(list.get(i)));
                 }
-                panel.add(buttonFenXi);
-                panel.add(buttonAgain);
+                JPanel panel6=new JPanel();               
+                panel6.add(buttonFenXi);
+                panel6.add(buttonAgain);
+                //setLayout(new GridLayout(1,2,5,5));*/
                 resultFrame.add(panel);
-               
+                resultFrame.add(panel6,BorderLayout.SOUTH);
+                 //resultFrame.add(panel6);
+                 
             }});
 
  //-------------------------------------下一题答案按钮的设定-------------------------------------------------------

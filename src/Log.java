@@ -32,6 +32,7 @@ public class Log extends JFrame{
 			}
 		//SwingUtlilites.updateComponentTreeUI(getContentPare());
 		Log test6=new Log();
+		
 	}
 	public Log()
 	{
@@ -50,8 +51,17 @@ public class Log extends JFrame{
 					      frame.setLocationRelativeTo(null);
 					      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 					      frame.setVisible(true);
-					    frame.setVisible(true);        // 打开新界面
+					    frame.setVisible(true);     // 打开新界面
 					    dispose();        // 关闭当前界面
+					    try {    
+				            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());    
+				        } catch (Exception e) {    
+				            e.printStackTrace();    
+				        }    
+				     
+				        Timer frame2 = new Timer("计时器");    
+				        frame2.pack();    
+				        frame2.setVisible(true);  
 				
 			}
 		});
