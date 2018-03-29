@@ -1,16 +1,20 @@
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Scanner;
 public class Calculate_SE {
-	 ArrayList<String> Arithmetic11=new ArrayList<String>(); //所有运算式集合
-	 ArrayList<String> Arithmetic12=new ArrayList<String>(); 
-	final static ArrayList<String> fraction = new ArrayList<String>();
-	final static ArrayList<String> FraAnswer = new ArrayList<String>();
+	 ArrayList<String> IntegerQ=new ArrayList<String>(); //所有运算式集合
+	 ArrayList<String> IntegerA=new ArrayList<String>(); 
+	final static ArrayList<String> FractionQ = new ArrayList<String>();
+	final static ArrayList<String> FractionA = new ArrayList<String>();
     private static LinkedList<String> operators=new LinkedList<>();	//用于记录操作符
     private static LinkedList<String> output=new LinkedList<>();    //用于记录输出
     private static StringBuilder sb=new StringBuilder();    //用于展示后缀表达式
-	static int M=20;
+	static int M=50;
 	static int [][]N=new int[M][M]; //存放运算式的数字
 	static char [][]C=new char[M][M];//存放运算式的字符
 	static int []CN=new int[M];      //记录运算式中数字个数
@@ -18,14 +22,7 @@ public class Calculate_SE {
 	Scanner scanner=new Scanner(System.in);
 	
 //-------------------生成随机运算式,调用方法计算结果---------------------------------------
-	public void calaulate_AE(int number) {
-		int Right=0;
-		float R = 0;
-		int F=0;
-		
-		//while(F==0)
-		//{
-		//outer:
+	public void calaulate_AE(int number) throws IOException {
 		for(int i=0;i<number;i++)
 		{
 			//CN[i]=(int)(Math.random()*2+4);
@@ -63,81 +60,6 @@ public class Calculate_SE {
 						}
 					}
 				}
-				/*while(C[i][1]==C[i][2])
-					C[i][2]=Str[(int)(Math.random()*3)];
-				
-				while(N[i][3]==N[i][4])
-					N[i][4]=(int) (Math.random()*100+1);
-				if(CN[i]==5)
-				{
-					int a=0,b=0,sum1,sum2;
-					if(C[i][0]=='+')
-						a=N[i][0]+N[i][1];
-					if(C[i][0]=='-')
-						a=N[i][0]-N[i][1];
-					if(C[i][0]=='*')
-						a=N[i][0]*N[i][1];
-					if(C[i][0]=='/')
-						a=N[i][0]/N[i][1];
-					
-					if(C[i][3]=='+')
-						a=N[i][3]+N[i][4];
-					if(C[i][3]=='-')
-						a=N[i][3]-N[i][4];
-					if(C[i][3]=='*')
-						a=N[i][3]*N[i][4];
-					if(C[i][3]=='/')
-						a=N[i][3]/N[i][4];
-					if(C[i][1]=='-')
-					{
-						while(a-N[i][2]<=0)
-						{
-							N[i][2]=(int) (Math.random()*100+1);
-						}
-					}
-					if(C[i][1]=='/')
-					{
-						while(a%N[i][2]!=0)
-						{
-								int temp=a;
-								a = a <N[i][2]? a: N[i][2];
-								N[i][2] = temp > N[i][2]? temp: N[i][2];
-								for(int num = a; num >= 1; num--)
-								{
-									if(a % num == 0 && N[i][2] % num == 0)
-									{
-										N[i][2]=num;
-										break;
-									}
-								}
-							}
-					}
-					
-					if(C[i][3]=='-')
-					{
-						while(N[i][2]-b<=0)
-						{
-							N[i][3]=(int) (Math.random()*100+1);
-						}
-					}
-					if(C[i][3]=='/')
-					{
-						while(N[i][2]%b!=0)
-						{
-								int temp=b;
-								b = b <N[i][2]? b: N[i][2];
-								N[i][2] = temp > N[i][2]? temp: N[i][2];
-								for(int num = b; num >= 1; num--)
-								{
-									if(b % num == 0 && N[i][2] % num == 0)
-									{
-										N[i][2]=num;
-										break;
-									}
-								}
-							}
-					}
-				}*/
 			}
 			String AE=new String();
 			LinkedList<String> list=new LinkedList<>();
@@ -162,63 +84,60 @@ public class Calculate_SE {
 				AE+='('+String.valueOf(N[i][CN[i]-2])+String.valueOf(C[i][CN[i]-2])+String.valueOf(N[i][CN[i]-1])+')'+'=';
 				String sum=transferToPostfix(list);
 				char fir =sum.charAt(0);
-				Arithmetic12.add(sum);
-				/*if(fir=='-'){
-					Arithmetic11.clear();
-					Arithmetic12.clear();
-					continue outer;
-				}
-				/*System.out.print(AE);
-				String SUM=scanner.nextLine();
-				if(SUM.equals(sum))
+				if(fir!='-')
 				{
-					System.out.print("回答真确，Very Good！(*^▽^*)：\n");
-					Right++;
+					IntegerA.add(sum);
+					IntegerQ.add(AE);
 				}
-				else
-					System.out.print("回答错误，要加油哦！(*^▽^*)：\n");
-				float R1 = (float)Right;
-				float R2 = (float)number;
-				R=(float) (R1/R2*100.00);
-				AE+=sum;*/
-				Arithmetic11.add(AE);
 		}
-		 Iterator it1 = Arithmetic11.iterator();  
+		 File f=new File("zhengshu.txt");
+         BufferedWriter bw=new BufferedWriter(new FileWriter(f));
+         for(int i=0;i<IntegerQ.size();i++){
+             bw.write(IntegerQ.get(i));
+             bw.newLine();
+         }
+         bw.close();
+		 Iterator it1 = IntegerQ.iterator();  
          while (it1.hasNext()) {  
              System.out.println(it1.next());  
          } 
-         Iterator it11 = Arithmetic12.iterator();  
+         Iterator it11 = IntegerA.iterator();  
          while (it11.hasNext()) {  
              System.out.println(it11.next());  
          } 
-		//System.out.print("本次答题共计"+number+"道，回答正确"+Right+"道，正确率为"+R+"%.\n");
 	}
-	//}
 //--------------------------------------------------------------------------
-	public void fenshu()
+	public void fenshu() throws IOException
 	{
 		 int num1,num2,num3;
-         for(int i=0;i<21;i++){
-         num1=1+(int)(Math.random()*10);//随机生成一个0-100的整数
-         num2=1+(int)(Math.random()*10);//随机生成一个0-100的整数
-         num3=1+(int)(Math.random()*10);//随机生成一个0-100的整数
+         for(int i=0;i<40;i++){
+         num1=1+(int)(Math.random()*10);
+         num2=1+(int)(Math.random()*10);
+         num3=1+(int)(Math.random()*10);
  	   int M,Z;
         int x1,x2,x3;
-            x1=1+(int)(Math.random()*num1);//生成一个比分母num1小的分子，实现真分数
-            x2=1+(int)(Math.random()*num2);//生成一个比分母num2小的分子，实现真分数
-            x3=1+(int)(Math.random()*num3);//生成一个比分母num3小的分子，实现真分数
+            x1=1+(int)(Math.random()*num1);
+            x2=1+(int)(Math.random()*num2);
+            x3=1+(int)(Math.random()*num3);
                 Z=x1*num2*num3+x2*num1*num3+x3*num1*num2;
                 M=num1*num2*num3;
                 String d=simplification(Z,M);
                 String s=x1+"/"+num1+"+"+x2+"/"+num2+"+"+x3+"/"+num3+"=";
-                fraction.add(s);
-                FraAnswer.add(d);
+                FractionQ.add(s);
+                FractionA.add(d);
          }
-         Iterator it1 = fraction.iterator();  
+         File f=new File("fenshu.txt");
+         BufferedWriter bw=new BufferedWriter(new FileWriter(f));
+         for(int i=0;i<FractionQ.size();i++){
+             bw.write(FractionQ.get(i));
+             bw.newLine();
+         }
+         bw.close();
+         Iterator it1 = FractionQ.iterator();  
          while (it1.hasNext()) {  
              System.out.println(it1.next());  
          } 
-         Iterator it11 = FraAnswer.iterator();  
+         Iterator it11 = FractionA.iterator();  
          while (it11.hasNext()) {  
              System.out.println(it11.next());  
          } 

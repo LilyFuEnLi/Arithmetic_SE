@@ -101,7 +101,7 @@ public class Timer extends JFrame {
                     long elapsed = System.currentTimeMillis() - programStart - pauseCount;    
                     label.setText(format(elapsed));    
                     time=label.getText();
-                    File f=new File("result1.txt");
+                    File f=new File("time.txt");
                     BufferedWriter bw;
 					try {
 						bw = new BufferedWriter(new FileWriter(f));

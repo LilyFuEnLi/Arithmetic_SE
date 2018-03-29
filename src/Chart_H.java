@@ -12,9 +12,9 @@ import java.util.Random;
 import javax.swing.JFrame;
 
 public class Chart_H extends JFrame{
-	 List<String> newList = new ArrayList<>();
-	//绘制柱形统计图
+	List<String> newList = new ArrayList<>();
 	private Random ran;
+	int number=0;
 	public Chart_H(){
 		super();
 		 File file = new File("test.txt");
@@ -26,6 +26,7 @@ public class Chart_H extends JFrame{
 	            String line = "";
 	            while((line = br.readLine()) != null) {
 	                newList.add(line);
+	                number++;
 	            }
 	        } catch (Exception e) {
 	            e.printStackTrace();
@@ -37,21 +38,16 @@ public class Chart_H extends JFrame{
 	                e.printStackTrace();
 	            }
 	        }
-	         
-	        for(String str : newList) {
-	            System.out.println(str);
-	        }
 		ran = new Random();
 	}
 	@Override
 	public void paint(Graphics g){
-		int number=newList.size()-1;
+		//int number=newList.size()-1;
 		int Width = getWidth();
 		int Height = getHeight();
 		int leftMargin = 20;//柱形图左边界
 		int topMargin = 50;//柱形图上边界
 		Graphics2D g2 = (Graphics2D) g;
-		int ruler = Height-topMargin-5;
 		g2.setColor(Color.WHITE);//绘制白色背景
 		g2.fillRect(0, 0, Width, Height-100);//绘制矩形图
 		g2.setColor(Color.LIGHT_GRAY);
@@ -61,17 +57,18 @@ public class Chart_H extends JFrame{
 			g2.drawLine(5, topMargin+30*i, Width, topMargin+30*i);//绘制灰色横线
 		}
 		g2.setColor(Color.PINK);
-		for(int i=0;i<number;i++)
+		for(int i=0;i<=number;i++)
 		{//绘制柱形图
-			int value =Integer.parseInt(newList.get(i));
-			int step = (i+1)*40;//设置每隔柱形图的水平间隔为40
-			//绘制矩形
-			int temp1=value/10;
-			int temp2=value%10;
-			g2.fillRoundRect(leftMargin+step*2-5,(100-value)*3+50, 40, 300-(100-value)*3, 40, 10);
-			//列出测试轮数
-			g2.drawString(newList.get(i), leftMargin+step*2, (100-value)*3+50);
-			g2.drawString("第"+(i+1)+"轮", leftMargin+step*2, 380);
+			if(newList.get(i)!="")
+			{
+				int value =Integer.parseInt(newList.get(i));
+				int step = (i+1)*40;//设置每隔柱形图的水平间隔为40
+				//绘制矩形
+				g2.fillRoundRect(leftMargin+step*2-5,(100-value)*3+50, 40, 300-(100-value)*3, 40, 10);
+				//列出测试轮数
+				g2.drawString(newList.get(i), leftMargin+step*2, (100-value)*3+50);
+				g2.drawString("第"+(i+1)+"轮", leftMargin+step*2, 380);
+			}	
 		}
 	}
 }

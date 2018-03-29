@@ -26,49 +26,37 @@ public class Start extends JFrame{
 	int NUM=0;
 	Calculate_SE CA=new Calculate_SE();
     int rightSum=0;
-    CreateArithmetic createArithmeticnew=new CreateArithmetic();
     List<String> newList = new ArrayList<>();//上一轮分数
+    ArrayList<String> list=new ArrayList<String>();
     private JPanel panel5=new JPanel();
-    
     private JPanel panel1=new JPanel();
     private JLabel label=new JLabel();
     private JLabel label1=new JLabel();
     private JLabel Timelabel = new JLabel();
     private JLabel Time = new JLabel();
-    //private JLabel panel4=new JPanel();
     JTextField text=new JTextField(10);
-   // ArrayList<String> list=new ArrayList<String>();
-    ArrayList<String> list=new ArrayList<String>();
-    /*public static void main(String[] args) {
-      JFrame log=new JFrame();
-      
-      JFrame frame=new  Start();
-      frame.setTitle("小学四则运算训练小程序");
-      frame.setSize(400,200);
-      frame.setLocationRelativeTo(null);
-      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      frame.setVisible(true);
-    }*/
     public Start()
     {
         setLayout(new GridLayout(5,2,5,5));
         addAnswer();
         JPanel panel2=new JPanel();
-        //panel2.setSize(10,100);
         panel2.add(new JLabel("请输入答案："));
         panel2.add(text);
         this.add(panel2);
+        Timer frame2 = new Timer("计时器");    
         //---------------------------------------整数-------------------------
         
         JRadioButton buttonInteger=new JRadioButton("整数");//JRadioButton
         buttonInteger.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
-				CA.calaulate_AE(5);
-				while(CA.Arithmetic12.get(number)=="0")
-				{
-					number++;
+				frame2.pack();    
+		        frame2.setVisible(true);  
+				try {
+					CA.calaulate_AE(40);
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
-				String shizi = CA.Arithmetic11.get(number);
+				String shizi = CA.IntegerQ.get(number);
 				NUM++;
 		        label1.setText(shizi);
 			}
@@ -77,8 +65,14 @@ public class Start extends JFrame{
         JRadioButton buttonFenshu = new JRadioButton("分数");
         buttonFenshu.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
-				CA.fenshu();
-				String shizi = CA.fraction.get(number);
+				frame2.pack();    
+		        frame2.setVisible(true);  
+				try {
+					CA.fenshu();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				String shizi = CA.FractionQ.get(number);
 				NUM++;
 		        label1.setText(shizi);
 			}
@@ -110,36 +104,24 @@ public class Start extends JFrame{
 				
 			}
 		});
- //-------------------------对两个按钮的添加------------------------------     
-        
-       /* JPanel panel3=new JPanel();
-        //button.setSize(10,10);
-       
-        panel3.add(buttonFenshu);
-        panel3.add(buttonInteger);
-        add(panel3);
-        
-        JPanel panel4 = new JPanel();
-        panel4.add(buttonNext);
-        panel4.add(buttonSubmit);
-        add(panel4);*/
  //----------------------------------------提交答案按钮的设定--------------------------
         JButton buttonSubmit=new JButton("提交答案");
         buttonSubmit.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) { 
+                frame2.dispose();
             	 if(buttonInteger.isSelected())
           	   {
           		   String question=label1.getText();
           		   String result=text.getText();
           		   String ifRight="";
           		   String time;
-          		   if((CA.Arithmetic12.get(number-1)).equals(result)){
+          		   if((CA.IntegerA.get(number)).equals(result)){
           			   ifRight="正确";
           			   rightSum++;
           		   }else{
           			   ifRight="错误";
           		   }
-                 String message=question+"， "+"你的答案："+result+"， "+"正确答案： "+CA.Arithmetic12.get(number-1)+"， 状态： "+ifRight;
+                 String message=question+"， "+"你的答案："+result+"， "+"正确答案： "+CA.IntegerA.get(number)+"， 状态： "+ifRight;
                  list.add(message);
                  text.setText("");
           
@@ -150,18 +132,18 @@ public class Start extends JFrame{
       		   String question=label1.getText();
       		   String result=text.getText();
       		   String ifRight="";
-      		   if(CA.FraAnswer.get(number-1).equals(result)){
+      		   if(CA.FractionA.get(number).equals(result)){
       			   ifRight="正确";
       			   rightSum++;
       		   }else{
       			   ifRight="错误";
       		   }
-             String message=question+"， "+"你的答案："+result+"， "+"正确答案： "+CA.FraAnswer.get(number-1)+"， 状态： "+ifRight;
+             String message=question+"， "+"你的答案："+result+"， "+"正确答案： "+CA.FractionA.get(number)+"， 状态： "+ifRight;
              list.add(message);
              text.setText("");
              }
            //-----------------------------------------
-             temp=number-1;
+            // temp=number-1;
              String score=String.valueOf(rightSum*5);
              newList.add(score);
              File file = new File("test.txt");
@@ -179,16 +161,16 @@ public class Start extends JFrame{
                           e1.printStackTrace();   
                       }   
                   }   
-                 File file1 = new File("result1.txt");
+                 File file1 = new File("time.txt");
                  FileReader fr1 = null;
                  BufferedReader br1 = null;
-                 String time="dfgd";
+                 String time="";
 				try {
                      fr1 = new FileReader(file1);
                      br1 = new BufferedReader(fr1);
                      String line = "";
                      while((line = br1.readLine()) != null) {
-                    	 time=br1.readLine();
+                    	 time=line;
                      }
                  } catch (Exception e1) {
                      e1.printStackTrace();
@@ -200,6 +182,7 @@ public class Start extends JFrame{
                          e1.printStackTrace();
                      }
                  }
+				
                 int size=list.size();
                 int errorSum=size-rightSum;
                 JFrame resultFrame=new JFrame();
@@ -209,14 +192,9 @@ public class Start extends JFrame{
                 resultFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 resultFrame.setVisible(true);
                 JPanel panel7 = new JPanel();
-                Timelabel.setText("您本轮答题用时为：");
-                Time.setText(time);
-                panel7.add(Timelabel);
-                panel7.add(Time);
-                
+                Timelabel.setText("您本轮答题用时为："+time);
+                panel7.add(Timelabel); 
                 resultFrame.add(panel7,BorderLayout.NORTH);
-                
-                
                 setLayout(new GridLayout(10,2,5,5));
                 JPanel panel=new JPanel();
                 Font font = new Font(Font.DIALOG, Font.PLAIN, 20);
@@ -228,10 +206,8 @@ public class Start extends JFrame{
                 JPanel panel6=new JPanel();               
                 panel6.add(buttonFenXi);
                 panel6.add(buttonAgain);
-                //setLayout(new GridLayout(1,2,5,5));*/
                 resultFrame.add(panel);
                 resultFrame.add(panel6,BorderLayout.SOUTH);
-                 //resultFrame.add(panel6);
                  
             }});
 
@@ -244,29 +220,24 @@ public class Start extends JFrame{
         		   String question=label1.getText();
         		   String result=text.getText();
         		   String ifRight="";
-        		   if((CA.Arithmetic12.get(number)).equals(result)){
+        		   if((CA.IntegerA.get(number)).equals(result)){
         			   ifRight="正确";
         			   rightSum++;
         		   }else{
         			   ifRight="错误";
         		   }
-               String message=question+"， "+"你的答案："+result+"， "+"正确答案： "+CA.Arithmetic12.get(number)+"， 状态： "+ifRight;
+               String message=question+"， "+"你的答案："+result+"， "+"正确答案： "+CA.IntegerA.get(number)+"， 状态： "+ifRight;
                list.add(message);
                text.setText("");
-               if(number==0)
-            	   number++;
-               while(CA.Arithmetic12.get(number)=="0")
-				{
-					number++;
-				}
-               String shizi=CA.Arithmetic11.get(number);
-               NUM++;
                number++;
+               String shizi=CA.IntegerQ.get(number);
+               NUM++;
                label1.setText(shizi);
                if(NUM==20)
                {
-               	JOptionPane.showMessageDialog(null, "答题结束", "本题为第20道题，答题结束，请提交答案。", JOptionPane.INFORMATION_MESSAGE);
-               }           
+               	JOptionPane.showMessageDialog(null, "本题为第20道题，答题结束，请提交答案。", "答题结束", JOptionPane.INFORMATION_MESSAGE);
+               	text.setText(result);
+               }         
                }
            
            if(buttonFenshu.isSelected())
@@ -274,34 +245,31 @@ public class Start extends JFrame{
     		   String question=label1.getText();
     		   String result=text.getText();
     		   String ifRight="";
-    		   if(CA.FraAnswer.get(number).equals(result)){
+    		   if(CA.FractionA.get(number).equals(result)){
     			   ifRight="正确";
     			   rightSum++;
     		   }else{
     			   ifRight="错误";
     		   }
-           String message=question+"， "+"你的答案："+result+"， "+"正确答案： "+CA.FraAnswer.get(number)+"， 状态： "+ifRight;
-           list.add(message);
-           text.setText("");
-           if(number==0)
-        	   number++;
-           String shizi=CA.fraction.get(number);
-           NUM++;
-           number++;        
-            label1.setText(shizi);
-            if(NUM==5)
-            {
-            	JOptionPane.showMessageDialog(null, "答题结束", "本题为第20道题，答题结束，请提交答案。", JOptionPane.INFORMATION_MESSAGE);
-            }
+    		   String message=question+"， "+"你的答案："+result+"， "+"正确答案： "+CA.FractionA.get(number)+"， 状态： "+ifRight;
+    		   list.add(message);
+    		   text.setText("");
+           	   number++;
+           	   String shizi=CA.FractionQ.get(number);
+           	   NUM++;     
+           	   label1.setText(shizi);
+           	   if(NUM==20)
+           	   {
+           		   JOptionPane.showMessageDialog(null, "本题为第20道题，答题结束，请提交答案。", "答题结束", JOptionPane.INFORMATION_MESSAGE);
+           		   text.setText(result);
+           	   }
            }
-           }        
-              });
+          }        
+      });
    
    //-------------------------对两个按钮的添加------------------------------     
         
         JPanel panel3=new JPanel();
-        //button.setSize(10,10);
-       
         panel3.add(buttonFenshu);
         panel3.add(buttonInteger);
         add(panel3);
@@ -310,17 +278,12 @@ public class Start extends JFrame{
         panel4.add(buttonNext);
         panel4.add(buttonSubmit);
         add(panel4);
-        
-        
     //------------------------------------------------
     }
 
     public void addAnswer(){
-        //System.out.println("hah");
-        //panel1.setSize(0,50);
         Font font = new Font(Font.DIALOG, Font.PLAIN, 20);
         label.setFont(font);
-       // String answer=createArithmeticnew.creat();
         File file = new File("test.txt");
         FileReader fr = null;
         BufferedReader br = null;
@@ -341,13 +304,8 @@ public class Start extends JFrame{
                 e.printStackTrace();
             }
         }
-         
-        for(String str : newList) {
-            System.out.println(str);
-        }
         int n=newList.size()-1;
         String answer=newList.get(n);
-        //number++;
         label.setText(answer);
         
         JLabel score = new JLabel();
@@ -355,10 +313,10 @@ public class Start extends JFrame{
         panel1.add(score);
         panel1.add(label);     
         add(panel1);
-        
-        //String shizi = CA.Arithmetic11.get(number);
         String shizi = " ";
         label1.setText(shizi);
+        Font font1 = new Font(Font.DIALOG, Font.PLAIN, 20);
+        label1.setFont(font1);
         panel5.add(label1);
         add(panel5);
     }

@@ -1,33 +1,85 @@
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintStream;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Scanner;
-public class Main {
-	static int number;
-	public static void main(String args[]) throws IOException
+
+import javax.swing.*;
+
+public class Main extends JFrame{
+
+	JButton jb1,jb2;
+	JTextField Name,Number;
+	JLabel jl1,jl2;
+	JPanel jp1,jp2,jp3;
+	final static ArrayList<String> name = new ArrayList<String>();
+	final static ArrayList<String> number = new ArrayList<String>();
+	public static void main(String[] args) {
+		try {
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");//windows风格
+			} catch (Exception e) {
+			e.printStackTrace();
+			}
+	
+		Main test6=new Main();	
+	}
+	public Main()
 	{
-		//System.out.print("请输入运算式个数：");
-		//Scanner scanner=new Scanner(System.in);
-		//number=scanner.nextInt();
-		//System.out.print("开始答题，要仔细哦！(*^▽^*)：\n");
-		Calculate_SE CA=new Calculate_SE();
-		CA.calaulate_AE(20);
-		//CA.fenshu();
-	System.out.print("正确答案位于result.txt文件中，请及时查询并复习!\n");
-		 File f=new File("result.txt");
-         BufferedWriter bw=new BufferedWriter(new FileWriter(f));
-         bw.write("201571030108");
-         bw.newLine();
-         for(int i=0;i<CA.Arithmetic11.size();i++){
-             bw.write(CA.Arithmetic11.get(i));
-             bw.newLine();
-         }
-         bw.close();
+		//创建组件
+		jb1=new JButton("确认");
+		jb1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String N=Name.getText();
+				String M=Number.getText();
+				name.add(N);
+				number.add(M);
+				       
+					    Start frame = new Start();
+					    frame.setTitle("小学四则运算训练小程序");
+					      frame.setSize(600,400);
+					      frame.setLocationRelativeTo(null);
+					      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					      frame.setVisible(true);
+					    frame.setVisible(true);     // 打开新界面
+					    dispose();        // 关闭当前界面
+					    try {    
+				            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());    
+				        } catch (Exception e) {    
+				            e.printStackTrace();    
+				        }    
+			}
+		});
+		jb2=new JButton("取消");
+		
+		Name=new JTextField(10);
+		Number=new JTextField(10);
+		
+		jl1=new JLabel("姓名：");
+		jl2=new JLabel("学号：");
+		
+		jp1=new JPanel();
+		jp2=new JPanel();
+		jp3=new JPanel();
+		//设置布局管理器
+		this.setLayout(new GridLayout(3,1,5,5));
+		//添加组件
+		jp1.add(jl1);
+		jp1.add(Name);
+		
+		jp2.add(jl2); 
+		jp2.add(Number);
+		
+		jp3.add(jb1);
+		jp3.add(jb2);
+		
+		this.add(jp1);
+		this.add(jp2);
+		this.add(jp3);
+		//设置窗体属性
+		this.setTitle("登录界面");
+		this.setSize(280, 160);
+		this.setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setVisible(true);
 	}
 }
