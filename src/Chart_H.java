@@ -26,7 +26,7 @@ public class Chart_H extends JFrame{
 	            String line = "";
 	            while((line = br.readLine()) != null) {
 	                newList.add(line);
-	                number++;
+	                //number++;
 	            }
 	        } catch (Exception e) {
 	            e.printStackTrace();
@@ -42,7 +42,7 @@ public class Chart_H extends JFrame{
 	}
 	@Override
 	public void paint(Graphics g){
-		//int number=newList.size()-1;
+		int number=newList.size()-1;
 		int Width = getWidth();
 		int Height = getHeight();
 		int leftMargin = 20;//柱形图左边界
@@ -59,7 +59,7 @@ public class Chart_H extends JFrame{
 		g2.setColor(Color.PINK);
 		for(int i=0;i<=number;i++)
 		{//绘制柱形图
-			if(newList.get(i)!="")
+			if(newList.get(i).length()!=0)
 			{
 				int value =Integer.parseInt(newList.get(i));
 				int step = (i+1)*40;//设置每隔柱形图的水平间隔为40

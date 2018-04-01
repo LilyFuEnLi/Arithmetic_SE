@@ -97,14 +97,14 @@ public class Calculate_SE {
              bw.newLine();
          }
          bw.close();
-		 Iterator it1 = IntegerQ.iterator();  
+		 /*Iterator it1 = IntegerQ.iterator();  
          while (it1.hasNext()) {  
              System.out.println(it1.next());  
          } 
          Iterator it11 = IntegerA.iterator();  
          while (it11.hasNext()) {  
              System.out.println(it11.next());  
-         } 
+         } */
 	}
 //--------------------------------------------------------------------------
 	public void fenshu() throws IOException
@@ -133,14 +133,14 @@ public class Calculate_SE {
              bw.newLine();
          }
          bw.close();
-         Iterator it1 = FractionQ.iterator();  
+        /* Iterator it1 = FractionQ.iterator();  
          while (it1.hasNext()) {  
              System.out.println(it1.next());  
          } 
          Iterator it11 = FractionA.iterator();  
          while (it11.hasNext()) {  
              System.out.println(it11.next());  
-         } 
+         } */
 	}
 	
     public static String simplification(int a,int b){
